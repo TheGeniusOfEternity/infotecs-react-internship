@@ -5,12 +5,10 @@ import { setToken } from "../../../shared/api/token";
 
 export const useLoginMutation = () => {
   const queryClient = useQueryClient();
+  const authResolver = new AuthResolver();
 
   return useMutation({
-    mutationFn: async (data: LoginRequestDto) => {
-      const auth = new AuthResolver();
-      return await auth.login(data);
-    },
+    mutationFn: async (data: LoginRequestDto) => await authResolver.login(data),
     onSuccess: async (token) => {
       setToken(token);
       await queryClient.invalidateQueries({ queryKey: ["auth"] });

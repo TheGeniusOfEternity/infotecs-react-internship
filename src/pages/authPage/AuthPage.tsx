@@ -9,7 +9,6 @@ import {
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import React from "react";
 import { useLoginMutation } from "../../entities/auth/api/useLoginMutation";
 import "./AuthPage.css";
@@ -26,11 +25,8 @@ export const AuthPage = () => {
   const navigate = useNavigate();
   const loginMutation = useLoginMutation();
 
-  const [error, setError] = useState("");
-
   const onFinish = async (values: LoginFormData) => {
     try {
-      setError("");
       await loginMutation.mutateAsync(values);
       notification.success({
         message: "Успешный вход",
@@ -38,7 +34,6 @@ export const AuthPage = () => {
       });
       navigate("/dashboard", { replace: true });
     } catch (err: unknown) {
-      setError((err as Error).message || "Ошибка авторизации");
       notification.error({
         message: "Ошибка входа",
         description: (err as Error).message || "Проверьте логин/пароль",
@@ -48,7 +43,6 @@ export const AuthPage = () => {
 
   const onFieldsChange = () => {
     notification.destroy();
-    if (error) setError("");
   };
 
   return (

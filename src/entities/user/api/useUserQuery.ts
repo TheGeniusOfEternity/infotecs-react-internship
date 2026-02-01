@@ -1,12 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { UserResolver } from "./user.resolver";
 
+const userResolver = new UserResolver();
+
 export const useUserQuery = () => {
   return useQuery({
     queryKey: ["user"],
-    queryFn: async () => {
-      const userResolver = new UserResolver();
-      return await userResolver.getCurrentUser()
-    }
+    queryFn: async () =>  await userResolver.getCurrentUser()
   });
 };

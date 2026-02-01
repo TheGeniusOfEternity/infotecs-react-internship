@@ -3,9 +3,10 @@ import type { LoginRequestDto } from "../model/login-request.dto";
 import { AuthResolver } from "./auth.resolver";
 import { setToken } from "../../../shared/api/token";
 
+const authResolver = new AuthResolver();
+
 export const useLoginMutation = () => {
   const queryClient = useQueryClient();
-  const authResolver = new AuthResolver();
 
   return useMutation({
     mutationFn: async (data: LoginRequestDto) => await authResolver.login(data),

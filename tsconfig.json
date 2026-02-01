@@ -12,9 +12,9 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
+    "isolatedModules": false,
+    "noEmit": false,
+    "jsx": "react",
     "baseUrl": "src"
   },
   "include": ["src"]

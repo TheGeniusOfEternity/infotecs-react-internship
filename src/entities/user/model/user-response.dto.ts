@@ -1,4 +1,4 @@
-export interface UserOutputDTO {
+export interface UserResponseDto {
   id: number;
   name: string;
   avatar: string;

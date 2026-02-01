@@ -1,0 +1,19 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { LoginRequestDto } from "../model/login-request.dto";
+import { AuthResolver } from "./auth.resolver";
+import { setToken } from "../../../shared/api/token";
+
+export const useLoginMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (data: LoginRequestDto) => {
+      const auth = new AuthResolver();
+      return await auth.login(data);
+    },
+    onSuccess: async (_) => {
+      setToken("jwt-token-instance");
+      await queryClient.invalidateQueries({ queryKey: ["auth"] });
+    }
+  });
+}

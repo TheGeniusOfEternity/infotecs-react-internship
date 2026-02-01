@@ -11,9 +11,9 @@ export const useLoginMutation = () => {
       const auth = new AuthResolver();
       return await auth.login(data);
     },
-    onSuccess: async (_) => {
-      setToken("jwt-token-instance");
+    onSuccess: async (token) => {
+      setToken(token);
       await queryClient.invalidateQueries({ queryKey: ["auth"] });
-    }
+    },
   });
 }

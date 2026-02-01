@@ -62,6 +62,3 @@ temp/
 *.iml
 *.iws
 out/
-
-# Api conf
-/src/shared/api/api.conf.ts

@@ -16,8 +16,8 @@ jobs:
       - run: npm run build
         env:
           API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
-          TEST_LOGIN: ${{ secrets.TEST_LOGIN }}
-          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+          ADMIN_LOGIN: ${{ secrets.ADMIN_LOGIN }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

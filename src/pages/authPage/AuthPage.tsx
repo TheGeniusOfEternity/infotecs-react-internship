@@ -47,7 +47,6 @@ export const AuthPage = () => {
   };
 
   const onFieldsChange = () => {
-    form.isFieldsTouched();
     notification.destroy();
     if (error) setError("");
   };

@@ -19,7 +19,7 @@ export class AuthResolver {
         if (data.login === apiConf.admin.login &&
           data.password === apiConf.admin.password
         ) resolve("access_token_example")
-        reject(new Error("Неверный логин или пароль"));
+        else reject(new Error("Неверный логин или пароль"));
       }, 2000)
     })
   }

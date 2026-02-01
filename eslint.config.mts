@@ -31,6 +31,13 @@ export default [
       "@typescript-eslint": tseslint,
       import: importPlugin,
     },
+    settings: {
+      "import/resolver": {
+        typescript: {
+          project: "./tsconfig.json",
+        },
+      },
+    },
     rules: {
       ...tseslint.configs.recommended.rules,
       ...tseslint.configs["strict"].rules,

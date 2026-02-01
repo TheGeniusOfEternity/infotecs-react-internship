@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import React from "react";
 import { useLoginMutation } from "../../entities/auth/api/useLoginMutation";
-import "./AuthPage.css"
+import "./AuthPage.css";
 
 const { Title } = Typography;
 
@@ -100,22 +100,6 @@ export const AuthPage = () => {
             >
               <Input.Password prefix={<LockOutlined />} placeholder="Пароль" />
             </Form.Item>
-
-            {error && (
-              <div style={{ marginBottom: 16 }}>
-                <div
-                  style={{
-                    background: "#fff2f0",
-                    border: "1px solid #ff4d4f",
-                    borderRadius: 6,
-                    padding: 12,
-                    color: "#ff4d4f",
-                  }}
-                >
-                  {error}
-                </div>
-              </div>
-            )}
 
             <Form.Item>
               <Button

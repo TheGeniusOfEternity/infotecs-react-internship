@@ -3,7 +3,7 @@ import type { LoginRequestDto } from "../model/login-request.dto";
 import { apiConf } from "../../../shared/api/api.conf";
 
 export class AuthResolver {
-  private apiResolver = new Resolver("auth")
+  private apiResolver = new Resolver("auth");
 
   public async login(data: LoginRequestDto) {
     // return await this.apiResolver.request<

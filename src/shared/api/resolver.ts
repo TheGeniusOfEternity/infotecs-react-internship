@@ -30,9 +30,9 @@ class Resolver {
       url: fullUrl,
       method,
       data,
-      headers: {
-        Authorization: jwt ? `Bearer ${jwt}` : null,
-      },
+      headers: jwt ? {
+        Authorization: `Bearer ${jwt}`,
+      } : undefined,
       responseType: (responseType || "json") as never,
     };
 

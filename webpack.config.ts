@@ -1,5 +1,6 @@
 import path from "path";
-import { Configuration } from "webpack";
+import webpack from "webpack";
+import type { Configuration } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import "webpack-dev-server";
@@ -52,6 +53,11 @@ const config: Configuration = {
       template: path.resolve(__dirname, "public/index.html"),
     }),
     new MiniCssExtractPlugin(),
+    new webpack.DefinePlugin({
+      "process.env.API_ENDPOINT": JSON.stringify(process.env.API_ENDPOINT),
+      "process.env.ADMIN_LOGIN": JSON.stringify(process.env.ADMIN_LOGIN),
+      "process.env.ADMIN_PASSWORD": JSON.stringify(process.env.ADMIN_PASSWORD),
+    }),
   ],
   devServer: {
     open: true,

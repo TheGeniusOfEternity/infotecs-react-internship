@@ -4,16 +4,21 @@ import tsParser from "@typescript-eslint/parser";
 import reactHooks from "eslint-plugin-react-hooks";
 import prettierConfig from "eslint-config-prettier";
 import reactRefresh from "eslint-plugin-react-refresh";
+import importPlugin from "eslint-plugin-import";
+import globals from "globals";
 
 /** @type {import('eslint').FlatConfig.ConfigArray} */
 export default [
-
-  { ignores: ["dist/**", "node_modules/**", "*.config.js"] },
+  { ignores: ["dist/**", "node_modules/**", "*.config.js", "*.config.ts"] },
   js.configs.recommended,
   prettierConfig,
   {
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
       parser: tsParser,
       parserOptions: {
         ecmaVersion: 2020,
@@ -24,6 +29,14 @@ export default [
     },
     plugins: {
       "@typescript-eslint": tseslint,
+      import: importPlugin,
+    },
+    settings: {
+      "import/resolver": {
+        typescript: {
+          project: "./tsconfig.json",
+        },
+      },
     },
     rules: {
       ...tseslint.configs.recommended.rules,

@@ -6,7 +6,7 @@ export const useAuthQuery = () => {
     queryKey: ["auth"],
     queryFn: async () => {
       const token = getToken();
-      return token ? { isAuthenticated: true } : undefined;
+      return { isAuthenticated: !!token };
     }
   });
 };

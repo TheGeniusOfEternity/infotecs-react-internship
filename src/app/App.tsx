@@ -1,5 +1,10 @@
 import React from "react";
+import { AuthPage } from "../pages/authPage/AuthPage";
 
 export const App = () => {
-  return <></>
+  return <>
+    <div className="wrapper">
+      <AuthPage />
+    </div>
+  </>
 }

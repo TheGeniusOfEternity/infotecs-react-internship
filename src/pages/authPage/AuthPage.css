@@ -1,0 +1,8 @@
+.field {
+    margin-bottom: 4vh;
+}
+
+.ant-input-affix-wrapper-focused,
+.ant-input-affix-wrapper:hover {
+    border-color: #ad3df5 !important;
+}

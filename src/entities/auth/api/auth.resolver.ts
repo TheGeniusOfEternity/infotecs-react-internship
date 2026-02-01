@@ -18,8 +18,8 @@ export class AuthResolver {
       setTimeout(() => {
         if (data.login === apiConf.admin.login &&
           data.password === apiConf.admin.password
-        ) resolve("token")
-        reject(new Error("Пароль должен содержать не менее 8 символов"));
+        ) resolve("access_token_example")
+        reject(new Error("Неверный логин или пароль"));
       }, 2000)
     })
   }

@@ -55,8 +55,8 @@ const config: Configuration = {
     new MiniCssExtractPlugin(),
     new webpack.DefinePlugin({
       "process.env.API_ENDPOINT": JSON.stringify(process.env.API_ENDPOINT),
-      "process.env.TEST_LOGIN": JSON.stringify(process.env.ADMIN_LOGIN),
-      "process.env.TEST_PASSWORD": JSON.stringify(process.env.ADMIN_PASSWORD),
+      "process.env.ADMIN_LOGIN": JSON.stringify(process.env.ADMIN_LOGIN),
+      "process.env.ADMIN_PASSWORD": JSON.stringify(process.env.ADMIN_PASSWORD),
     }),
   ],
   devServer: {

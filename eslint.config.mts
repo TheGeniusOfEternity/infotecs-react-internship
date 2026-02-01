@@ -4,10 +4,10 @@ import tsParser from "@typescript-eslint/parser";
 import reactHooks from "eslint-plugin-react-hooks";
 import prettierConfig from "eslint-config-prettier";
 import reactRefresh from "eslint-plugin-react-refresh";
+import importPlugin from "eslint-plugin-import";
 
 /** @type {import('eslint').FlatConfig.ConfigArray} */
 export default [
-
   { ignores: ["dist/**", "node_modules/**", "*.config.js"] },
   js.configs.recommended,
   prettierConfig,
@@ -24,6 +24,7 @@ export default [
     },
     plugins: {
       "@typescript-eslint": tseslint,
+      import: importPlugin,
     },
     rules: {
       ...tseslint.configs.recommended.rules,

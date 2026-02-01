@@ -4,6 +4,7 @@ import axios, {
   isAxiosError,
 } from "axios";
 import { apiConf } from "./api.conf";
+import { getToken } from "./token";
 
 interface RequestConfig<T> extends AxiosRequestConfig {
   data?: T;
@@ -23,7 +24,7 @@ class Resolver {
     responseType?: AxiosResponse["request"]["responseType"],
   ): Promise<S> {
     const fullUrl = `${apiConf.endpoint}/${this.endpoint}/${url}`;
-    const jwt = localStorage.getItem("access_token");
+    const jwt = getToken();
 
     const config: RequestConfig<U> = {
       url: fullUrl,

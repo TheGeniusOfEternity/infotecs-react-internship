@@ -2,12 +2,13 @@ import React from "react";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import { Divider } from "antd";
+import { gray } from "@ant-design/colors";
 
 interface UserListProps {
   users: {
     id: number;
     name: string;
-    avatarLink: string;
+    avatar: string;
     createdAt: string;
   }[]
 }
@@ -15,25 +16,55 @@ interface UserListProps {
 const StyledList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-`
+  height: 100%;
+  overflow: scroll;
+
+  .user {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 1.2rem;
+    row-gap: 0.5rem;
+    padding: 1.2rem;
+  }
+
+  .name,
+  .created-at {
+    margin: 0;
+  }
+
+  .created-at {
+    color: ${gray[0]};
+  }
+
+  .avatar {
+    grid-row: 1 / -1;
+    aspect-ratio: 1 / 1;
+    width: 3rem;
+    border-radius: 25%;
+  }
+
+  .divider {
+    margin: 0;
+  }
+`;
 
 export const UsersList = ({ users }: UserListProps
 ) => {
   return (
     <>
       <StyledList>
-        {users.map((user) => (
-          <>
-            <div className="user" key={user.id}>
-              <img src={user.avatarLink} alt="user" />
-              <h3>{user.name}</h3>
-              <p>
+        {users.map((user, index) => (
+          <div className="wrapper" key={user.id}>
+            <div className="user">
+              <img className="avatar" src={user.avatar} alt="user" />
+              <h4 className="name">{user.name}</h4>
+              <p className="created-at">
                 Зарегистрирован {dayjs(user.createdAt).format("DD.MM.YYYY")}
               </p>
             </div>
-            <Divider />
-          </>
+            {users.length - 1 !== index ? <Divider className="divider" /> : <></>}
+          </div>
         ))}
       </StyledList>
     </>

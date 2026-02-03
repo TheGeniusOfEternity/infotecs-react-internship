@@ -4,9 +4,12 @@ import { getToken } from "../../../shared/api/token";
 export const useAuthQuery = () => {
   return useQuery({
     queryKey: ["auth"],
-    queryFn: async () => {
+    queryFn: () => {
       const token = getToken();
       return { isAuthenticated: !!token };
-    }
+    },
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000,
+    retry: false,
   });
 };

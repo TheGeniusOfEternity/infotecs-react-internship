@@ -8,7 +8,6 @@ import {
   Spin,
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 import React from "react";
 import { useLoginMutation } from "../entities/auth/api/useLoginMutation";
 import styled from "styled-components";
@@ -39,7 +38,6 @@ const StyledPage = styled.div`
 
 export const AuthPage = () => {
   const [form] = Form.useForm<LoginFormData>();
-  const navigate = useNavigate();
   const loginMutation = useLoginMutation();
 
   const onFinish = async (values: LoginFormData) => {
@@ -49,7 +47,6 @@ export const AuthPage = () => {
         message: "Успешный вход",
         description: "Перенаправление на главную...",
       });
-      navigate("/users", { replace: true });
     } catch (err: unknown) {
       notification.error({
         message: "Ошибка входа",

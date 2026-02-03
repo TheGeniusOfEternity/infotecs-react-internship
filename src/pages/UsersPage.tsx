@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Button } from "antd";
 import { UsersList } from "../components/lists/UsersList";
+import { clearToken } from "../shared/api/token";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 const StyledPage = styled.div`
   display: flex;
@@ -42,6 +45,15 @@ const StyledPage = styled.div`
 `;
 
 export const UsersPage = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const logout = () => {
+    clearToken();
+    queryClient.removeQueries({ queryKey: ["auth"] });
+    navigate("/login", { replace: true });
+  }
+
   const mockUsers = [
     {
       createdAt: "2026-02-01T04:17:06.012Z",
@@ -149,17 +161,14 @@ export const UsersPage = () => {
         type="primary"
         size="large"
         className="exit-btn"
+        onClick={logout}
       >
         Выход
       </Button>
       <div className="users-wrapper">
         <UsersList users={mockUsers} />
       </div>
-      <Button
-        className="create-user-btn"
-        type="primary"
-        size="large"
-      >
+      <Button className="create-user-btn" type="primary" size="large">
         Создать пользователя
       </Button>
     </StyledPage>

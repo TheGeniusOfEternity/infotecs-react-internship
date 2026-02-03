@@ -57,15 +57,15 @@ export const AuthPage = () => {
 
   return (
     <StyledPage>
-      <Card style={{ width: 400 }}>
-        <div style={{ textAlign: "center", marginBottom: 24 }}>
-          <LockOutlined style={{ fontSize: 48, color: primary[5] }} />
-          <Title level={2} style={{ margin: "16px 0 8px" }}>
-            Вход в систему
-          </Title>
-        </div>
+      <Spin spinning={loginMutation.isPending}>
+        <Card style={{ width: 400 }}>
+          <div style={{ textAlign: "center", marginBottom: 24 }}>
+            <LockOutlined style={{ fontSize: 48, color: primary[5] }} />
+            <Title level={2} style={{ margin: "16px 0 8px" }}>
+              Вход в систему
+            </Title>
+          </div>
 
-        <Spin spinning={loginMutation.isPending}>
           <Form
             form={form}
             name="login"
@@ -108,8 +108,8 @@ export const AuthPage = () => {
               </Button>
             </Form.Item>
           </Form>
-        </Spin>
-      </Card>
+        </Card>
+      </Spin>
     </StyledPage>
   );
 };

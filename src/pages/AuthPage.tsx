@@ -10,8 +10,8 @@ import {
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import { useLoginMutation } from "../../entities/auth/api/useLoginMutation";
-import "./AuthPage.css";
+import { useLoginMutation } from "../entities/auth/api/useLoginMutation";
+import styled from "styled-components";
 
 const { Title } = Typography;
 
@@ -19,6 +19,23 @@ interface LoginFormData {
   login: string;
   password: string;
 }
+
+const StyledPage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f0f2f5;
+
+  .field {
+    margin-bottom: 2.25rem;
+  }
+
+  .ant-input-affix-wrapper-focused,
+  .ant-input-affix-wrapper:hover {
+    border-color: #ad3df5 !important;
+  }
+`;
 
 export const AuthPage = () => {
   const [form] = Form.useForm<LoginFormData>();
@@ -46,15 +63,7 @@ export const AuthPage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        background: "#f0f2f5",
-      }}
-    >
+    <StyledPage>
       <Card style={{ width: 400 }}>
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <LockOutlined style={{ fontSize: 48, color: "#ad3df5" }} />
@@ -109,6 +118,6 @@ export const AuthPage = () => {
           </Form>
         </Spin>
       </Card>
-    </div>
+    </StyledPage>
   );
 };

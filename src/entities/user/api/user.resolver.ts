@@ -14,4 +14,15 @@ export class UserResolver {
       null
     );
   }
+
+  public async getAll() {
+    return await this.apiResolver.request<
+      null,
+      UserResponseDto[]
+    >(
+      "",
+      "GET",
+      null,
+    )
+  }
 }

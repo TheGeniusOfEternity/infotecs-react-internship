@@ -32,7 +32,7 @@ export const AuthPage = () => {
         message: "Успешный вход",
         description: "Перенаправление на главную...",
       });
-      navigate("/dashboard", { replace: true });
+      navigate("/users", { replace: true });
     } catch (err: unknown) {
       notification.error({
         message: "Ошибка входа",

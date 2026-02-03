@@ -11,6 +11,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import React from "react";
 import { useLoginMutation } from "../entities/auth/api/useLoginMutation";
 import styled from "styled-components";
+import { primary } from "../index";
 
 const { Title } = Typography;
 
@@ -28,11 +29,6 @@ const StyledPage = styled.div`
 
   .field {
     margin-bottom: 2.25rem;
-  }
-
-  .ant-input-affix-wrapper-focused,
-  .ant-input-affix-wrapper:hover {
-    border-color: #ad3df5 !important;
   }
 `;
 
@@ -63,7 +59,7 @@ export const AuthPage = () => {
     <StyledPage>
       <Card style={{ width: 400 }}>
         <div style={{ textAlign: "center", marginBottom: 24 }}>
-          <LockOutlined style={{ fontSize: 48, color: "#ad3df5" }} />
+          <LockOutlined style={{ fontSize: 48, color: primary[5] }} />
           <Title level={2} style={{ margin: "16px 0 8px" }}>
             Вход в систему
           </Title>
@@ -102,7 +98,6 @@ export const AuthPage = () => {
 
             <Form.Item>
               <Button
-                style={{ backgroundColor: "#ad3df5" }}
                 type="primary"
                 htmlType="submit"
                 block

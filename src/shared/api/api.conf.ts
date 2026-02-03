@@ -4,5 +4,6 @@ export const apiConf = {
     password: process.env.ADMIN_PASSWORD || "",
   },
   endpoint:
-    process.env.API_ENDPOINT || "",
+    process.env.API_ENDPOINT ||
+    "",
 };

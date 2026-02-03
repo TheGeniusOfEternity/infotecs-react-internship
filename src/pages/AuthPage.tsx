@@ -8,10 +8,10 @@ import {
   Spin,
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 import React from "react";
-import { useLoginMutation } from "../../entities/auth/api/useLoginMutation";
-import "./AuthPage.css";
+import { useLoginMutation } from "../entities/auth/api/useLoginMutation";
+import styled from "styled-components";
+import { primary } from "../index";
 
 const { Title } = Typography;
 
@@ -20,9 +20,20 @@ interface LoginFormData {
   password: string;
 }
 
+const StyledPage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f0f2f5;
+
+  .field {
+    margin-bottom: 2.25rem;
+  }
+`;
+
 export const AuthPage = () => {
   const [form] = Form.useForm<LoginFormData>();
-  const navigate = useNavigate();
   const loginMutation = useLoginMutation();
 
   const onFinish = async (values: LoginFormData) => {
@@ -32,7 +43,6 @@ export const AuthPage = () => {
         message: "Успешный вход",
         description: "Перенаправление на главную...",
       });
-      navigate("/dashboard", { replace: true });
     } catch (err: unknown) {
       notification.error({
         message: "Ошибка входа",
@@ -46,24 +56,16 @@ export const AuthPage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        background: "#f0f2f5",
-      }}
-    >
-      <Card style={{ width: 400 }}>
-        <div style={{ textAlign: "center", marginBottom: 24 }}>
-          <LockOutlined style={{ fontSize: 48, color: "#ad3df5" }} />
-          <Title level={2} style={{ margin: "16px 0 8px" }}>
-            Вход в систему
-          </Title>
-        </div>
+    <StyledPage>
+      <Spin spinning={loginMutation.isPending}>
+        <Card style={{ width: 400 }}>
+          <div style={{ textAlign: "center", marginBottom: 24 }}>
+            <LockOutlined style={{ fontSize: 48, color: primary[5] }} />
+            <Title level={2} style={{ margin: "16px 0 8px" }}>
+              Вход в систему
+            </Title>
+          </div>
 
-        <Spin spinning={loginMutation.isPending}>
           <Form
             form={form}
             name="login"
@@ -96,7 +98,6 @@ export const AuthPage = () => {
 
             <Form.Item>
               <Button
-                style={{ backgroundColor: "#ad3df5" }}
                 type="primary"
                 htmlType="submit"
                 block
@@ -107,8 +108,8 @@ export const AuthPage = () => {
               </Button>
             </Form.Item>
           </Form>
-        </Spin>
-      </Card>
-    </div>
+        </Card>
+      </Spin>
+    </StyledPage>
   );
 };

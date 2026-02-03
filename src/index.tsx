@@ -1,9 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { App } from "./app/App";
 import "./global.less";
 import React from "react";
 import ReactDOM from "react-dom";
+import { ConfigProvider, theme } from "antd";
+import { generate } from "@ant-design/colors";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,16 +17,37 @@ const queryClient = new QueryClient({
   },
 });
 
+export const primary = generate("#ad3df5");
+
+const customTheme = {
+  token: {
+    colorPrimary: primary[5],
+    colorPrimaryHover: primary[6],
+    colorPrimaryActive: primary[7],
+  },
+  components: {
+    Button: {
+      defaultBg: "#f9fafb",
+      defaultBorderColor: "#d1d5db",
+    },
+  },
+};
+
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
-    <BrowserRouter
-      future={{
-        v7_startTransition: true,
-        v7_relativeSplatPath: true,
-      }}
-    >
-      <App />
-    </BrowserRouter>
+    <ConfigProvider theme={{
+      algorithm: theme.defaultAlgorithm,
+      ...customTheme
+    }}>
+      <HashRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
+        <App />
+      </HashRouter>
+    </ConfigProvider>
   </QueryClientProvider>,
   document.getElementById("root"),
 );

@@ -10,7 +10,8 @@ interface UserListProps {
     name: string;
     avatar: string;
     createdAt: string;
-  }[]
+  }[],
+  onUserSelected: (id: number) => void,
 }
 
 const StyledList = styled.div`
@@ -50,7 +51,7 @@ const StyledList = styled.div`
   }
 `;
 
-export const UsersList = ({ users }: UserListProps
+export const UsersList = ({ users, onUserSelected }: UserListProps
 ) => {
   return (
     <>
@@ -58,13 +59,27 @@ export const UsersList = ({ users }: UserListProps
         {users.map((user, index) => (
           <div className="wrapper" key={user.id}>
             <div className="user">
-              <img className="avatar" src={user.avatar} alt="user" />
-              <h4 className="name">{user.name}</h4>
+              <img
+                className="avatar"
+                src={user.avatar}
+                alt="user-avatar"
+                onClick={() => onUserSelected(user.id)}
+              />
+              <h4
+                className="name"
+                onClick={() => onUserSelected(user.id)}
+              >
+                {user.name}
+              </h4>
               <p className="created-at">
                 Зарегистрирован {dayjs(user.createdAt).format("DD.MM.YYYY")}
               </p>
             </div>
-            {users.length - 1 !== index ? <Divider className="divider" /> : <></>}
+            {users.length - 1 !== index ? (
+              <Divider className="divider" />
+            ) : (
+              <></>
+            )}
           </div>
         ))}
       </StyledList>

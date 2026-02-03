@@ -6,6 +6,8 @@ import { clearToken } from "../shared/api/token";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUsersQuery } from "../entities/user/api/useUsersQuery";
+import { UserCrudModal } from "../components/modals/UserCrudModal";
+import type { UserResponseDto } from "../entities/user/model/user-response.dto";
 
 const StyledPage = styled.div`
   display: flex;
@@ -55,6 +57,15 @@ export const UsersPage = () => {
 
   const queryClient = useQueryClient();
   const { data, isLoading } = useUsersQuery();
+  const [open, setOpen] = React.useState(false);
+
+  const [selectedUser, setSelectedUser] = React.useState<UserResponseDto | null>(null);
+
+  const selectUser = (id: number) => {
+    setSelectedUser(data?.find(user => user.id === id) ?? null);
+    console.log(id);
+    setOpen(true);
+  }
 
   const logout = () => {
     clearToken();
@@ -71,12 +82,27 @@ export const UsersPage = () => {
         spinning={isLoading}
       >
         <div className="users-wrapper">
-          {data && <UsersList users={data} />}
+          {data &&
+            <UsersList
+              users={data}
+              onUserSelected={selectUser}
+            />
+          }
         </div>
       </Spin>
-      <Button className="create-user-btn" type="primary" size="large">
+      <Button
+        className="create-user-btn"
+        type="primary"
+        size="large"
+        onClick={() => selectUser(-1)}
+      >
         Создать пользователя
       </Button>
+      <UserCrudModal
+        user={selectedUser}
+        isOpened={open}
+        toggleModal={() => setOpen(!open)}
+      />
     </StyledPage>
   );
 }

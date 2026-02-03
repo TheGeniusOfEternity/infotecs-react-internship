@@ -23,7 +23,7 @@ class Resolver {
     data?: U,
     responseType?: AxiosResponse["request"]["responseType"],
   ): Promise<S> {
-    const fullUrl = `${apiConf.endpoint}/${this.endpoint}/${url}`;
+    const fullUrl = `${apiConf.endpoint}/${this.endpoint}${url ? `/${url}` : ""}`;
     const jwt = getToken();
 
     const config: RequestConfig<U> = {

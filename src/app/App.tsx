@@ -6,13 +6,11 @@ import { Route, Routes } from "react-router-dom";
 export const App = () => {
   return (
     <>
-      <div className="wrapper">
-        <Routes>
-          <Route path="/login" element={<PublicRoute />}>
-            <Route index element={<AuthPage />} />
-          </Route>
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/login" element={<PublicRoute />}>
+          <Route index element={<AuthPage />} />
+        </Route>
+      </Routes>
     </>
   );
 }

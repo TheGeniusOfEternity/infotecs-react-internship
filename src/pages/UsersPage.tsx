@@ -8,6 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useGetUsersQuery } from "@/entities/user/api/useGetUsersQuery";
 import { UserCrudModal } from "@/components/modals/UserCrudModal";
 import type { User } from "@/entities/user/api/types";
+import { useTitle } from "@/shared/hooks/useTitle";
 
 const StyledPage = styled.div`
   display: flex;
@@ -53,6 +54,9 @@ const StyledPage = styled.div`
 `;
 
 export const UsersPage = () => {
+
+  useTitle("Пользователи");
+
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();

@@ -12,6 +12,7 @@ import React from "react";
 import { useLoginMutation } from "@/entities/auth/api/useLoginMutation";
 import styled from "styled-components";
 import { primary } from "@/index";
+import { useTitle } from "@/shared/hooks/useTitle";
 
 const { Title } = Typography;
 
@@ -33,6 +34,7 @@ const StyledPage = styled.div`
 `;
 
 export const AuthPage = () => {
+  useTitle("Авторизация");
 
   const [form] = Form.useForm<LoginFormData>();
   const { notification } = App.useApp();
@@ -44,7 +46,7 @@ export const AuthPage = () => {
       await loginMutation.mutateAsync(values);
       notification.success({
         message: "Успешный вход",
-        description: "Перенаправление на главную...",
+        description: `Добро пожаловать, ${values.login}`,
       });
     } catch (err: unknown) {
       notification.error({

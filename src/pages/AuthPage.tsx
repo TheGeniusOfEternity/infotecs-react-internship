@@ -9,9 +9,9 @@ import {
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import React from "react";
-import { useLoginMutation } from "../entities/auth/api/useLoginMutation";
+import { useLoginMutation } from "@/entities/auth/api/useLoginMutation";
 import styled from "styled-components";
-import { primary } from "../index";
+import { primary } from "@/index";
 
 const { Title } = Typography;
 

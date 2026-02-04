@@ -39,23 +39,13 @@ class Resolver {
     try {
       const response: AxiosResponse<S> = await axios(config);
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       if (isAxiosError(error)) {
         return {
-          status: error.response?.data.status,
-          data: error.response?.data.data,
+          msg: error.response?.data.msg,
         } as S;
       }
-      if (!error.response) {
-        return {
-          status: error.name,
-          data: error.message,
-        } as S;
-      }
-      return {
-        status: 500,
-        data: "Неизвестная ошибка",
-      } as S;
+      return error as S;
     }
   }
 }

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { LoginRequestDto } from "../model/login-request.dto";
+import type { LoginRequestDto } from "@/entities/auth/model/login-request.dto";
 import { AuthResolver } from "./auth.resolver";
-import { setToken } from "../../../shared/api/token";
+import { setToken } from "@/shared/api/token";
 import { useNavigate } from "react-router-dom";
 
 const authResolver = new AuthResolver();

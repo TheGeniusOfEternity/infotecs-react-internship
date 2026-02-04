@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { Button, Spin } from "antd";
-import { UsersList } from "../components/lists/UsersList";
-import { clearToken } from "../shared/api/token";
+import { UsersList } from "@/components/lists/UsersList";
+import { clearToken } from "@/shared/api/token";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useGetUsersQuery } from "../entities/user/api/useGetUsersQuery";
-import { UserCrudModal } from "../components/modals/UserCrudModal";
-import type { UserResponseDto } from "../entities/user/model/user-response.dto";
+import { useGetUsersQuery } from "@/entities/user/api/useGetUsersQuery";
+import { UserCrudModal } from "@/components/modals/UserCrudModal";
+import type { UserResponseDto } from "@/entities/user/model/user-response.dto";
 
 const StyledPage = styled.div`
   display: flex;
@@ -63,7 +63,6 @@ export const UsersPage = () => {
 
   const selectUser = (id: number) => {
     setSelectedUser(data?.find(user => user.id === id) ?? null);
-    console.log(id);
     setOpen(true);
   }
 

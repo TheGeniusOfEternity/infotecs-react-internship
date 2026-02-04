@@ -1,6 +1,6 @@
-import Resolver from "../../../shared/api/resolver";
-import type { LoginRequestDto } from "../model/login-request.dto";
-import { apiConf } from "../../../shared/api/api.conf";
+import Resolver from "@/shared/api/resolver";
+import type { LoginRequestDto } from "@/entities/auth/model/login-request.dto";
+import { apiConf } from "@/shared/api/api.conf";
 
 export class AuthResolver {
   private apiResolver = new Resolver("auth");

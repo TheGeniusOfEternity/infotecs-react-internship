@@ -34,7 +34,7 @@ const StyledPage = styled.div`
 `;
 
 export const AuthPage = () => {
-  useTitle("Авторизация")
+  useTitle("Авторизация");
 
   const [form] = Form.useForm<LoginFormData>();
   const { notification } = App.useApp();

@@ -55,7 +55,7 @@ const StyledPage = styled.div`
 
 export const UsersPage = () => {
 
-  useTitle("Пользователи")
+  useTitle("Пользователи");
 
   const navigate = useNavigate();
 

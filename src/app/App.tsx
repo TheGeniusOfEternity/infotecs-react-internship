@@ -1,10 +1,9 @@
 import React from "react";
 import { PublicRoute } from "./routes/PublicRoute";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { AuthPage } from "@/pages/AuthPage";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { UsersPage } from "@/pages/UsersPage";
-import { Navigate } from "react-router";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 
 export const App = () => {

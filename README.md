@@ -13,21 +13,25 @@ Test task for React frontend developer internship.
 
 ## Project Structure (Feature-Sliced Design)
 
+```
 src/
 ├── app/
-│ └── routes/
+│   └── routes/
 ├── components/
-│ ├── lists/
-│ └── modals/
+│   ├── lists/
+│   └── modals/
 ├── entities/
-│ ├── auth/
-│ │ ├── api/
-│ │ └── model/
-│ └── user/
-│   ├── api/
-│   └── model/
+│   ├── auth/
+│   │   ├── api/
+│   │   └── model/
+│   └── user/
+│       ├── api/
+│       └── model/
 ├── pages/
 └── shared/
-  ├── api/
-  ├── model/
-  └── hooks/
+    ├── api/
+    ├── model/
+    └── hooks/
+```
+
+

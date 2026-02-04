@@ -12,22 +12,18 @@ import { useCreateUserMutation } from "@/entities/user/api/useCreateUserMutation
 import { useUpdateUserMutation } from "@/entities/user/api/useUpdateUserMutation";
 import type { UpdateUserRequestDto } from "@/entities/user/model/update-user-request.dto";
 import { useDeleteUserMutation } from "@/entities/user/api/useDeleteUserMutation";
+import type { User } from "@/entities/user/api/types";
 const { Title } = Typography;
 
-interface UserData {
-  id?: number;
-  name: string;
-  avatar: string;
-  createdAt?: string
-}
+type UserData= Required<Pick<User, "name" | "avatar">> &
+  Partial<Pick<User, "id" | "createdAt">>;
 
 interface UserCrudModalProps {
-  user: UserData | null;
-  toggleModal: () => void;
-  isOpened: boolean;
+  user: Partial<User> | null;
+  closeModal: () => void;
+  open: boolean;
 }
-export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProps) => {
-
+export const UserCrudModal = ({ user, closeModal, open }: UserCrudModalProps) => {
   const { notification } = App.useApp();
   const [form] = Form.useForm<UserData>();
 
@@ -38,24 +34,28 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
   const [isPending, setIsPending] = useState(false);
 
   useEffect(() => {
-    setIsPending(createUserMutation.isPending || updateUserMutation.isPending || deleteUserMutation.isPending);
-  }, [createUserMutation, updateUserMutation]);
+    setIsPending(
+      createUserMutation.isPending ||
+        updateUserMutation.isPending ||
+        deleteUserMutation.isPending,
+    );
+  }, [createUserMutation, updateUserMutation, deleteUserMutation]);
 
   const deleteUser = async (id: number) => {
-   try {
-     await deleteUserMutation.mutateAsync(id);
-     notification.success({
-       message: "Успех",
-       description: `Пользователь успешно удалён`,
-     });
-     toggleModal();
-   } catch (error: unknown) {
-     notification.error({
-       message: "Ошибка при удалении пользователя",
-       description: (error as Error).message || "Неизвестная ошибка",
-     });
-   }
-  }
+    try {
+      await deleteUserMutation.mutateAsync(id);
+      notification.success({
+        message: "Успех",
+        description: `Пользователь успешно удалён`,
+      });
+      closeModal();
+    } catch (error: unknown) {
+      notification.error({
+        message: "Ошибка при удалении пользователя",
+        description: (error as Error).message || "Неизвестная ошибка",
+      });
+    }
+  };
 
   const saveUser = async (data: UserData) => {
     try {
@@ -68,7 +68,7 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
           ? `Информация о пользователе ${data.name} успешно обновлена`
           : `Пользователь с именем ${data.name} успешно зарегистрирован`,
       });
-      toggleModal();
+      closeModal();
     } catch (error: unknown) {
       notification.error({
         message: data.id
@@ -77,11 +77,11 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
         description: (error as Error).message || "Неизвестная ошибка",
       });
     }
-  }
+  };
 
   useEffect(() => {
     if (!form) return;
-    user !== null
+    user !== null && user.id
       ? form.setFieldsValue(user)
       : form.resetFields();
   }, [user, form]);
@@ -89,11 +89,11 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
   return (
     <>
       <Modal
-        open={isOpened}
+        open={open}
         footer={null}
         destroyOnHidden={true}
         forceRender={true}
-        onCancel={toggleModal}
+        onCancel={closeModal}
         closable={!isPending}
         maskClosable={!isPending}
       >
@@ -128,8 +128,22 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
             rules={[
               { required: true, message: "Введите ссылку на аватарку!" },
               {
-                type: "url",
-                message: "Некорректный URL!",
+                validator: (_rule, value) => {
+                  if (!value) {
+                    return Promise.resolve();
+                  }
+                  const trimmed = String(value).trim();
+                  const imageUrlPattern =
+                    /^(https?:)?\/\/.+\.(png|jpe?g|gif|webp|svg)$/i;
+                  if (!imageUrlPattern.test(trimmed)) {
+                    return Promise.reject(
+                      new Error(
+                        "Введите корректную ссылку на изображение (http(s):// или //)!",
+                      ),
+                    );
+                  }
+                  return Promise.resolve();
+                },
               },
             ]}
           >
@@ -159,7 +173,7 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
                   Удалить
                 </Button>
               )}
-              <Button onClick={toggleModal} disabled={isPending}>
+              <Button onClick={closeModal} disabled={isPending}>
                 Отмена
               </Button>
               <Button
@@ -180,4 +194,4 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
       </Modal>
     </>
   );
-}
+};

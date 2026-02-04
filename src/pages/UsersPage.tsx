@@ -64,43 +64,36 @@ export const UsersPage = () => {
   const selectUser = (id: number) => {
     setSelectedUser(data?.find(user => user.id === id) ?? null);
     setOpen(true);
-  }
+  };
 
   const logout = () => {
     clearToken();
     queryClient.removeQueries({ queryKey: ["auth"] });
     navigate("/login", { replace: true });
-  }
+  };
 
   return (
     <StyledPage>
       <Button type="primary" size="large" className="exit-btn" onClick={logout}>
         Выход
       </Button>
-      <Spin
-        spinning={isLoading}
-      >
+      <Spin spinning={isLoading}>
         <div className="users-wrapper">
-          {data &&
-            <UsersList
-              users={data}
-              onUserSelected={selectUser}
-            />
-          }
+          {data && <UsersList users={data} onUserSelected={selectUser} />}
         </div>
       </Spin>
       <Button
         className="create-user-btn"
         type="primary"
         size="large"
-        onClick={() => selectUser(-1)}
+        onClick={() => setOpen(true)}
       >
         Создать пользователя
       </Button>
       <UserCrudModal
         user={selectedUser}
-        isOpened={open}
-        toggleModal={() => setOpen(!open)}
+        open={open}
+        closeModal={() => setOpen(false)}
       />
     </StyledPage>
   );

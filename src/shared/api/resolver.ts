@@ -47,7 +47,10 @@ class Resolver {
             : error.response?.data
         } as S;
       }
-      return error as S;
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error(String(error));
     }
   }
 }

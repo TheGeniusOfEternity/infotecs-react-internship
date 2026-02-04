@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserResolver } from "./user.resolver";
 import type { CreateUserRequestDto } from "@/entities/user/model/create-user-request.dto";
+import type { User } from "@/entities/user/api/types";
 import type { UserResponseDto } from "@/entities/user/model/user-response.dto";
+import type { ErrorResponseDto } from "@/shared/api/model/error-response.dto";
 
 const userResolver = new UserResolver();
 
@@ -10,10 +12,14 @@ export const useCreateUserMutation = () => {
 
   return useMutation({
     mutationFn: async (data: CreateUserRequestDto) => await userResolver.create(data),
-    onSuccess: (createdUser) => {
-      queryClient.setQueryData(["users"], (old: UserResponseDto[] | undefined) =>
-        old ? [...old, createdUser] : [createdUser],
-      );
+    onSuccess: (response) => {
+      const createdUser = (response as UserResponseDto)
+      if (createdUser.id) {
+        const user = { ...createdUser, id: Number(createdUser.id) };
+        queryClient.setQueryData(["users"], (old: User[] | undefined) =>
+          old ? [...old, user] : [user],
+        );
+      } else throw new Error((response as ErrorResponseDto).msg);
     },
   });
 };

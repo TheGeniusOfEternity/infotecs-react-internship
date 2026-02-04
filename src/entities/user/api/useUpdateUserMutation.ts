@@ -12,8 +12,13 @@ export const useUpdateUserMutation = () => {
   return useMutation({
     mutationFn: async (data: UpdateUserRequestDto) => await userResolver.updateById(data),
     onSuccess: async (response) => {
-      if ((response as UserResponseDto).id) {
-        await queryClient.invalidateQueries({ queryKey: ["users"] })
+      const user = response as UserResponseDto;
+      if (user.id) {
+        queryClient.setQueryData<UserResponseDto[]>(["users"], (oldUsers) => {
+          return oldUsers
+            ? oldUsers.map((u) => (u.id === user.id ? user : u))
+            : oldUsers;
+        });
       } else throw new Error((response as ErrorResponseDto).msg);
     }
   });

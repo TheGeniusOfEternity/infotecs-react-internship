@@ -8,7 +8,7 @@ export class UserResolver {
   private apiResolver = new Resolver("users");
 
   public async create(user: CreateUserRequestDto) {
-    return await this.apiResolver.request<CreateUserRequestDto, UserResponseDto>(
+    return await this.apiResolver.request<CreateUserRequestDto, UserResponseDto | ErrorResponseDto>(
       "",
       "POST",
       user,
@@ -25,7 +25,7 @@ export class UserResolver {
   public async deleteById(id: number) {
     return await this.apiResolver.request<null, UserResponseDto | ErrorResponseDto>(
       id.toString(), "DELETE", null
-    )
+    );
   }
 
   public async getCurrentUser() {

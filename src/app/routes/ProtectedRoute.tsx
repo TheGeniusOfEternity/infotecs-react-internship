@@ -1,7 +1,7 @@
 import { Navigate } from "react-router";
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { useAuthQuery } from "../../entities/auth/api/useAuthQuery";
+import { useAuthQuery } from "@/entities/auth/api/useAuthQuery";
 import { Spin } from "antd";
 
 export const ProtectedRoute = () => {

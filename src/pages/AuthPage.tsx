@@ -4,14 +4,14 @@ import {
   Button,
   Card,
   Typography,
-  notification,
   Spin,
+  App,
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import React from "react";
-import { useLoginMutation } from "../entities/auth/api/useLoginMutation";
+import { useLoginMutation } from "@/entities/auth/api/useLoginMutation";
 import styled from "styled-components";
-import { primary } from "../index";
+import { primary } from "@/index";
 
 const { Title } = Typography;
 
@@ -33,7 +33,10 @@ const StyledPage = styled.div`
 `;
 
 export const AuthPage = () => {
+
   const [form] = Form.useForm<LoginFormData>();
+  const { notification } = App.useApp();
+
   const loginMutation = useLoginMutation();
 
   const onFinish = async (values: LoginFormData) => {
@@ -62,7 +65,7 @@ export const AuthPage = () => {
           <div style={{ textAlign: "center", marginBottom: 24 }}>
             <LockOutlined style={{ fontSize: 48, color: primary[5] }} />
             <Title level={2} style={{ margin: "16px 0 8px" }}>
-              Вход в систему
+              Авторизация
             </Title>
           </div>
 

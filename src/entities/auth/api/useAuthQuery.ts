@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getToken } from "../../../shared/api/token";
+import { getToken } from "@/shared/api/token";
 
 export const useAuthQuery = () => {
   return useQuery({

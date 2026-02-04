@@ -3,14 +3,11 @@ import dayjs from "dayjs";
 import styled from "styled-components";
 import { Divider } from "antd";
 import { gray } from "@ant-design/colors";
+import type { User } from "@/entities/user/api/types";
 
 interface UserListProps {
-  users: {
-    id: number;
-    name: string;
-    avatar: string;
-    createdAt: string;
-  }[]
+  users: User[],
+  onUserSelected: (id: number) => void,
 }
 
 const StyledList = styled.div`
@@ -48,25 +45,54 @@ const StyledList = styled.div`
   .divider {
     margin: 0;
   }
+  
+  .name:hover,
+  .avatar:hover {
+    cursor: pointer;
+  }
+  
+  .no-users {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
-export const UsersList = ({ users }: UserListProps
+export const UsersList = ({ users, onUserSelected }: UserListProps
 ) => {
   return (
     <>
       <StyledList>
-        {users.map((user, index) => (
+        {users.length > 0 ? users.map((user, index) => (
           <div className="wrapper" key={user.id}>
             <div className="user">
-              <img className="avatar" src={user.avatar} alt="user" />
-              <h4 className="name">{user.name}</h4>
+              <img
+                className="avatar"
+                src={user.avatar}
+                alt="user-avatar"
+                onClick={() => onUserSelected(user.id)}
+              />
+              <h4
+                className="name"
+                onClick={() => onUserSelected(user.id)}
+              >
+                {user.name}
+              </h4>
               <p className="created-at">
                 Зарегистрирован {dayjs(user.createdAt).format("DD.MM.YYYY")}
               </p>
             </div>
-            {users.length - 1 !== index ? <Divider className="divider" /> : <></>}
+            {users.length - 1 !== index ? (
+              <Divider className="divider" />
+            ) : (
+              <></>
+            )}
           </div>
-        ))}
+        )) :
+          <div className="no-users">Пользователи не найдены</div>
+        }
       </StyledList>
     </>
   );

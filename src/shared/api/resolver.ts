@@ -23,7 +23,7 @@ class Resolver {
     data?: U,
     responseType?: AxiosResponse["request"]["responseType"],
   ): Promise<S> {
-    const fullUrl = `${apiConf.endpoint}/${this.endpoint}/${url}`;
+    const fullUrl = `${apiConf.endpoint}/${this.endpoint}${url ? `/${url}` : ""}`;
     const jwt = getToken();
 
     const config: RequestConfig<U> = {
@@ -39,23 +39,18 @@ class Resolver {
     try {
       const response: AxiosResponse<S> = await axios(config);
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       if (isAxiosError(error)) {
         return {
-          status: error.response?.data.status,
-          data: error.response?.data.data,
+          msg: error.response?.data.msg
+            ? error.response.data.msg
+            : error.response?.data
         } as S;
       }
-      if (!error.response) {
-        return {
-          status: error.name,
-          data: error.message,
-        } as S;
+      if (error instanceof Error) {
+        throw error;
       }
-      return {
-        status: 500,
-        data: "Неизвестная ошибка",
-      } as S;
+      throw new Error(String(error));
     }
   }
 }

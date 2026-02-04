@@ -1,5 +1,5 @@
-export interface UserResponseDto {
-  id: string;
+export interface UpdateUserRequestDto {
+  id: number;
   name: string;
   avatar: string;
   createdAt: string;

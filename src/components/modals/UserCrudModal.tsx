@@ -91,13 +91,17 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
       <Modal
         open={isOpened}
         footer={null}
+        destroyOnHidden={true}
         forceRender={true}
         onCancel={toggleModal}
+        closable={!isPending}
+        maskClosable={!isPending}
       >
         <Title level={4}>
           {user?.id ? "Редактирование" : "Создание"} пользователя
         </Title>
         <Form
+          disabled={isPending}
           onFinish={saveUser}
           form={form}
           name="user-crud"
@@ -123,12 +127,17 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
             label="Ссылка на аватарку"
             rules={[
               { required: true, message: "Введите ссылку на аватарку!" },
-              { min: 3, message: "Пароль минимум 3 символа" },
+              {
+                type: "url",
+                message: "Некорректный URL!",
+              },
             ]}
           >
             <Input />
           </Form.Item>
-          <Form.Item hidden={true} name="createdAt"><Input /></Form.Item>
+          <Form.Item hidden={true} name="createdAt">
+            <Input />
+          </Form.Item>
           <Form.Item>
             <div
               style={{
@@ -150,14 +159,13 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
                   Удалить
                 </Button>
               )}
-              <Button
-                onClick={toggleModal}
-                disabled={isPending}
-              >
+              <Button onClick={toggleModal} disabled={isPending}>
                 Отмена
               </Button>
               <Button
-                loading={createUserMutation.isPending || updateUserMutation.isPending}
+                loading={
+                  createUserMutation.isPending || updateUserMutation.isPending
+                }
                 disabled={isPending}
                 type="primary"
                 htmlType="submit"

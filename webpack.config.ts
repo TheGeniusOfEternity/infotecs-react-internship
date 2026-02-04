@@ -5,6 +5,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import "webpack-dev-server";
 import { fileURLToPath } from "node:url";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,6 +61,12 @@ const config: Configuration = {
       "process.env.API_ENDPOINT": JSON.stringify(process.env.API_ENDPOINT),
       "process.env.ADMIN_LOGIN": JSON.stringify(process.env.ADMIN_LOGIN),
       "process.env.ADMIN_PASSWORD": JSON.stringify(process.env.ADMIN_PASSWORD),
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "public/favicons", to: "favicons" },
+        { from: "public/site.webmanifest", to: "site.webmanifest" },
+      ],
     }),
   ],
   devServer: {

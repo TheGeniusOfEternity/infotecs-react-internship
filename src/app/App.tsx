@@ -4,11 +4,13 @@ import { Route, Routes } from "react-router-dom";
 import { AuthPage } from "@/pages/AuthPage";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { UsersPage } from "@/pages/UsersPage";
+import { Navigate } from "react-router";
 
 export const App = () => {
   return (
     <>
       <Routes>
+        <Route path="/" element={<Navigate to="/users" replace />} />
         <Route path="/login" element={<PublicRoute />}>
           <Route index element={<AuthPage />} />
         </Route>

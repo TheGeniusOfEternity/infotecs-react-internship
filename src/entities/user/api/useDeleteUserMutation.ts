@@ -14,9 +14,7 @@ export const useDeleteUserMutation = () => {
     onSuccess: (response) => {
       const deletedId = (response as UserResponseDto).id
       if (deletedId) {
-        queryClient.setQueryData(
-          ["users"],
-          (old: User[] | undefined) =>
+        queryClient.setQueryData<User[]>(["users"], (old: User[] | undefined) =>
             old?.filter((user) => user.id !== Number(deletedId)),
         );
       } else throw Error((response as ErrorResponseDto).msg)

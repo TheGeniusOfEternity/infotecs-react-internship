@@ -16,7 +16,7 @@ export const useCreateUserMutation = () => {
       const createdUser = (response as UserResponseDto)
       if (createdUser.id) {
         const user = { ...createdUser, id: Number(createdUser.id) };
-        queryClient.setQueryData(["users"], (old: User[] | undefined) =>
+        queryClient.setQueryData<User[]>(["users"], (old: User[] | undefined) =>
           old ? [...old, user] : [user],
         );
       } else throw new Error((response as ErrorResponseDto).msg);

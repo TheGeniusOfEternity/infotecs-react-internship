@@ -70,6 +70,11 @@ export const UsersPage = () => {
     setOpen(true);
   };
 
+  const createUser = () => {
+    setSelectedUser(null);
+    setOpen(true);
+  }
+
   const logout = () => {
     clearToken();
     queryClient.removeQueries({ queryKey: ["auth"] });
@@ -90,7 +95,7 @@ export const UsersPage = () => {
         className="create-user-btn"
         type="primary"
         size="large"
-        onClick={() => setOpen(true)}
+        onClick={createUser}
       >
         Создать пользователя
       </Button>

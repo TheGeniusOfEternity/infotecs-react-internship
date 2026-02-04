@@ -3,14 +3,10 @@ import dayjs from "dayjs";
 import styled from "styled-components";
 import { Divider } from "antd";
 import { gray } from "@ant-design/colors";
+import type { User } from "@/entities/user/api/types";
 
 interface UserListProps {
-  users: {
-    id: number;
-    name: string;
-    avatar: string;
-    createdAt: string;
-  }[],
+  users: User[],
   onUserSelected: (id: number) => void,
 }
 
@@ -48,6 +44,11 @@ const StyledList = styled.div`
 
   .divider {
     margin: 0;
+  }
+  
+  .name:hover,
+  .avatar:hover {
+    cursor: pointer;
   }
   
   .no-users {

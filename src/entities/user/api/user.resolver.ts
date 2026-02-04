@@ -15,11 +15,17 @@ export class UserResolver {
     );
   }
 
-  public async update(user: UpdateUserRequestDto) {
+  public async updateById(user: UpdateUserRequestDto) {
     return await this.apiResolver.request<
       UpdateUserRequestDto,
       UserResponseDto | ErrorResponseDto
     >(user.id.toString(), "PUT", user);
+  }
+
+  public async deleteById(id: number) {
+    return await this.apiResolver.request<null, UserResponseDto | ErrorResponseDto>(
+      id.toString(), "DELETE", null
+    )
   }
 
   public async getCurrentUser() {

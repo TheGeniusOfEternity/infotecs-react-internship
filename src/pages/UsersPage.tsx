@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useGetUsersQuery } from "@/entities/user/api/useGetUsersQuery";
 import { UserCrudModal } from "@/components/modals/UserCrudModal";
-import type { UserResponseDto } from "@/entities/user/model/user-response.dto";
+import type { User } from "@/entities/user/api/types";
 
 const StyledPage = styled.div`
   display: flex;
@@ -59,7 +59,7 @@ export const UsersPage = () => {
   const { data, isLoading } = useGetUsersQuery();
   const [open, setOpen] = React.useState(false);
 
-  const [selectedUser, setSelectedUser] = React.useState<UserResponseDto | null>(null);
+  const [selectedUser, setSelectedUser] = React.useState<User | null>(null);
 
   const selectUser = (id: number) => {
     setSelectedUser(data?.find(user => user.id === id) ?? null);

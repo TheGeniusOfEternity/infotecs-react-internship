@@ -4,8 +4,8 @@ import {
   Button,
   Card,
   Typography,
-  notification,
   Spin,
+  App,
 } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import React from "react";
@@ -33,7 +33,10 @@ const StyledPage = styled.div`
 `;
 
 export const AuthPage = () => {
+
   const [form] = Form.useForm<LoginFormData>();
+  const { notification } = App.useApp();
+
   const loginMutation = useLoginMutation();
 
   const onFinish = async (values: LoginFormData) => {

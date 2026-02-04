@@ -42,7 +42,9 @@ class Resolver {
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         return {
-          msg: error.response?.data.msg,
+          msg: error.response?.data.msg
+            ? error.response.data.msg
+            : error.response?.data
         } as S;
       }
       return error as S;

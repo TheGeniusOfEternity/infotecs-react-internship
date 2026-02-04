@@ -49,6 +49,14 @@ const StyledList = styled.div`
   .divider {
     margin: 0;
   }
+  
+  .no-users {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export const UsersList = ({ users, onUserSelected }: UserListProps
@@ -56,7 +64,7 @@ export const UsersList = ({ users, onUserSelected }: UserListProps
   return (
     <>
       <StyledList>
-        {users.map((user, index) => (
+        {users.length > 0 ? users.map((user, index) => (
           <div className="wrapper" key={user.id}>
             <div className="user">
               <img
@@ -81,7 +89,9 @@ export const UsersList = ({ users, onUserSelected }: UserListProps
               <></>
             )}
           </div>
-        ))}
+        )) :
+          <div className="no-users">Пользователи не найдены</div>
+        }
       </StyledList>
     </>
   );

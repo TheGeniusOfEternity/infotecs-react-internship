@@ -5,7 +5,7 @@ import { UsersList } from "../components/lists/UsersList";
 import { clearToken } from "../shared/api/token";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUsersQuery } from "../entities/user/api/useUsersQuery";
+import { useGetUsersQuery } from "../entities/user/api/useGetUsersQuery";
 import { UserCrudModal } from "../components/modals/UserCrudModal";
 import type { UserResponseDto } from "../entities/user/model/user-response.dto";
 
@@ -56,7 +56,7 @@ export const UsersPage = () => {
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
-  const { data, isLoading } = useUsersQuery();
+  const { data, isLoading } = useGetUsersQuery();
   const [open, setOpen] = React.useState(false);
 
   const [selectedUser, setSelectedUser] = React.useState<UserResponseDto | null>(null);

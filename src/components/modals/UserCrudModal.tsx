@@ -1,5 +1,14 @@
-import { Button, Form, Input, InputNumber, Modal, Typography } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  notification,
+  Typography,
+} from "antd";
 import React, { useEffect } from "react";
+import { useCreateUserMutation } from "../../entities/user/api/useCreateUserMutation";
 const { Title } = Typography;
 
 interface UserData {
@@ -15,13 +24,26 @@ interface UserCrudModalProps {
 }
 export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProps) => {
   const [form] = Form.useForm<UserData>();
+  const createUserMutation = useCreateUserMutation();
 
   const deleteUser = (id: number) => {
     console.log(`deleteById: ${id}`);
   }
 
-  const saveUser = (data: UserData) => {
-    console.log("save", data);
+  const saveUser = async (data: UserData) => {
+    try {
+      await createUserMutation.mutateAsync(data);
+      notification.success({
+        message: "Успех",
+        description: `Пользователь с именем ${data.name} успешно зарегистрирован`,
+      });
+      toggleModal();
+    } catch (err: unknown) {
+      notification.error({
+        message: "Ошибка регистрации нового пользователя",
+        description: (err as Error).message || "Проверьте логин/пароль",
+      });
+    }
   }
 
   useEffect(() => {
@@ -71,7 +93,7 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
               { min: 3, message: "Пароль минимум 3 символа" },
             ]}
           >
-            <Input/>
+            <Input />
           </Form.Item>
           <Form.Item>
             <div
@@ -88,12 +110,22 @@ export const UserCrudModal = ({ user, toggleModal, isOpened }: UserCrudModalProp
                   className="cancel-btn"
                   style={{ marginRight: "auto" }}
                   danger={true}
+                  loading={createUserMutation.isPending}
+                  disabled={createUserMutation.isPending}
                 >
                   Удалить
                 </Button>
               )}
-              <Button onClick={toggleModal}>Отмена</Button>
               <Button
+                onClick={toggleModal}
+                loading={createUserMutation.isPending}
+                disabled={createUserMutation.isPending}
+              >
+                Отмена
+              </Button>
+              <Button
+                loading={createUserMutation.isPending}
+                disabled={createUserMutation.isPending}
                 type="primary"
                 htmlType="submit"
                 block

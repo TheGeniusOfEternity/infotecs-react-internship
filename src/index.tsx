@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter } from "react-router-dom";
 import { App } from "./app/App";
+import { App as AntdApp } from "antd";
 import "./global.less";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -35,18 +36,22 @@ const customTheme = {
 
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
-    <ConfigProvider theme={{
-      algorithm: theme.defaultAlgorithm,
-      ...customTheme
-    }}>
-      <HashRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <App />
-      </HashRouter>
+    <ConfigProvider
+      theme={{
+        algorithm: theme.defaultAlgorithm,
+        ...customTheme,
+      }}
+    >
+      <AntdApp>
+        <HashRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
+          <App />
+        </HashRouter>
+      </AntdApp>
     </ConfigProvider>
   </QueryClientProvider>,
   document.getElementById("root"),

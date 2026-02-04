@@ -3,7 +3,7 @@ import { UserResolver } from "./user.resolver";
 
 const userResolver = new UserResolver();
 
-export const useUsersQuery = () => {
+export const useGetUsersQuery = () => {
   return useQuery({
     queryKey: ["users"],
     queryFn: async () => await userResolver.getAll(),

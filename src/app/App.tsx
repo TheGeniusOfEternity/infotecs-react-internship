@@ -5,6 +5,7 @@ import { AuthPage } from "@/pages/AuthPage";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { UsersPage } from "@/pages/UsersPage";
 import { Navigate } from "react-router";
+import { NotFoundPage } from "@/pages/NotFoundPage";
 
 export const App = () => {
   return (
@@ -17,6 +18,7 @@ export const App = () => {
         <Route path="/users" element={<ProtectedRoute />}>
           <Route index element={<UsersPage />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );
